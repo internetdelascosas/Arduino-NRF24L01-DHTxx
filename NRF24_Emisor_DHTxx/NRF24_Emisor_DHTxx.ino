@@ -24,8 +24,8 @@
 // Declaracion de variables globales
 volatile int f_wdt = 1;
 int counter = 0;
-int packetCounter = 0;
-int sensordata[2]; 
+int messageCounter = 0;
+float sensordata[3]; 
 
 // Configuracion de Sensor DHTxx
 // Pin del Arduino al cual esta conectado el pin 2 del sensor
@@ -151,7 +151,7 @@ void setupSensor()
 void setup()
 { 
   // Inicializa la conexion serial
-  Serial.begin(57600);
+  Serial.begin(9600);
   Serial.println("Inicializa puerto serial");
   
   // Deshabilita la detection Brown out para evitar consumo de energia
@@ -175,12 +175,16 @@ void loop()
   // Inicializa los datos del sensor
   sensordata[0] = 0;
   sensordata[1] = 0;
+  sensordata[2] = 0;
+
+  // Asigna un numero de serie al mensaje
+  sensordata[0] = messageCounter;
   
   // Obtiene los datos del sensor
   // Obtiene la Temperatura en Celsius
-  sensordata[0] = dht.readTemperature();
+  sensordata[1] = dht.readTemperature();
   // Obtiene la Humedad
-  sensordata[1] = dht.readHumidity();
+  sensordata[2] = dht.readHumidity();
 
   
   // Control de errores, valida que se obtuvieron valores para los datos medidos
@@ -192,14 +196,17 @@ void loop()
   // Abre un canal de escritura utilizando la radio
   radio.openWritingPipe(pipe);
   
+  // Imprime los datos recibidos para validacion
+  Serial.print("PacketCounter = ");
+  Serial.print(sensordata[0]);
+  Serial.print(" Temperatura = ");
+  Serial.print(sensordata[1]);
+  Serial.print(" Humedad = ");      
+  Serial.println(sensordata[2]);
+
   // Escribe los datos en el canal
   radio.write(sensordata, sizeof(sensordata));
-  
-  // Imprime los datos recibidos para validacion
-  Serial.print("Temperatura = ");
-  Serial.print(sensordata[0]);
-  Serial.print(" Humedad = ");      
-  Serial.println(sensordata[1]);
+  messageCounter++;
   
   // Entra en modo dormir (Ahorro de energia)
   enterSleep();
