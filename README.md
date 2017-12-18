@@ -4,12 +4,12 @@ Proyecto de nodos inalámbricos que envían datos a nodo central, basado en Ardu
 
 ## Instalación
 
-Librerias Arduino requeridas:
+Librerías Arduino requeridas:
 - RF24 by TMRh20
 - DHT Sensor Library by Adafruit
 - Adafruit Unified Sensor by Adafruit
 
-Para instalar estas librerías se debe ir al menu Sketch, luego seleccionar Include Library y luego Manage Libraries. Para instalar una librería se seleciona el nombre de la librería y luego se instala vue IDE de Arduino.
+Para instalar estas librerías se debe ir al menu Sketch, seleccionar Include Library y luego Manage Libraries. Para instalar una librería se seleciona el nombre de la librería y luego se instala presionando el botón Install.
 
 EL proyecto aún esta en desarrollo, toda la información de como crear cada nodo y como hacer funcionar el Emisor y Receptor se documentarán aquí y en http://internetdelascosas.cl
 
